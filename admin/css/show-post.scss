@@ -1,0 +1,15 @@
+.posts-settings {
+  max-width: 500px;
+  h1{
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  &__quality, &__categories{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+  }
+}
