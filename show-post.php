@@ -47,28 +47,26 @@ class ShowPost
                 'category_name' => $postSettings['category'],
             ));
             ?>
+            <div class="post-list">
+                <?php
+                foreach ($posts as $post):
+                    ?>
+                    <div class="post-list__item">
+                        <div class="post-list__title"><?= $post->post_title ?></div>
+                        <div class="post-list__descr"><?= $post->post_excerpt ?></div>
+                        <div class="post-list__link">
+                            <a href="<?= get_permalink($post->ID) ?>">Подробнее</a>
+                        </div>
+                    </div>
 
+                <?php endforeach; ?>
+            </div>
             <?php
         } catch (Exception $e) {
             $this->logger->error('Error displaying last posts: ' . $e->getMessage());
             return '<p>An error occurred while fetching posts.</p>';
         }
-        ?>
-        <div class="post-list">
-            <?php
-            foreach ($posts as $post):
-                ?>
-                <div class="post-list__item">
-                    <div class="post-list__title"><?= $post->post_title ?></div>
-                    <div class="post-list__descr"><?= $post->post_excerpt ?></div>
-                    <div class="post-list__link">
-                        <a href="<?= get_permalink($post->ID) ?>">Подробнее</a>
-                    </div>
-                </div>
 
-            <?php endforeach; ?>
-        </div>
-        <?php
     }
 
     public function register_custom_settings ()
@@ -87,7 +85,7 @@ class ShowPost
             update_option('show_post_data', json_encode($_POST['settings']));
             $this->logger->info('Post data updated.', $_POST['settings']);
 
-        } else {
+        }else {
             $this->logger->warning('No post data found.');
         }
         wp_redirect(admin_url('admin.php?page=show-post&status=success'));
@@ -157,9 +155,7 @@ class ShowPost
         <?php
 
     }
-
-    public function my_ajax_handler ()
-    {
+    public function my_ajax_handler (){
         wp_send_json_success('Кнопка нажата');
     }
 }
